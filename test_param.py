@@ -6,15 +6,10 @@ import math
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from selenium import webdriver
 import pytest
 
 
-def calc():
-    return str(math.log(int(time.time())))
-
-
-urls = ['https://stepik.org/lesson/236895/step/1',
+URLS = ['https://stepik.org/lesson/236895/step/1',
         'https://stepik.org/lesson/236896/step/1',
         'https://stepik.org/lesson/236897/step/1',
         'https://stepik.org/lesson/236898/step/1',
@@ -24,14 +19,11 @@ urls = ['https://stepik.org/lesson/236895/step/1',
         'https://stepik.org/lesson/236905/step/1']
 
 
-@pytest.fixture()
-def browser():
-    browser = webdriver.Firefox()
-    yield browser
-    browser.quit()
+def calc():
+    return str(math.log(int(time.time())))
 
 
-@pytest.mark.parametrize('url', urls)
+@pytest.mark.parametrize('url', URLS)
 def test_params(browser, url):
     browser.get(url)
     textarea = WebDriverWait(browser, 12).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".textarea")))
